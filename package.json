@@ -1,0 +1,23 @@
+{
+  "name": "nodejs-booklist",
+  "version": "1.0.0",
+  "description": "Book List",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node index.js",
+    "dev": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/MarkeyBass"
+  },
+  "author": "Mark Kirzhner",
+  "license": "ISC",
+  "dependencies": {
+    "uuid": "^8.3.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.7"
+  }
+}

@@ -88,7 +88,7 @@ const httpsPORT = 8001
 
 const httpServer = http.createServer(creds, (req, res) => {
   const myurl = url.parse(req.url);               // important
-  res.writeHead(301, { location: `https://markeybass.com:${httpServer}${myurl.pathname}`})
+  res.writeHead(301, { location: `https://markeybass.com:${httpsPORT}${myurl.pathname}`})
   res.end();
 });
 

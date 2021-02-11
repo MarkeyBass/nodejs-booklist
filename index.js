@@ -14,7 +14,7 @@ const key = fs.readFileSync('/etc/letsencrypt/archive/markeybass.com/privkey1.pe
 
 const creds = {
   key,
-  cret,
+  cert,
   ca
 } 
 

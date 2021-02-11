@@ -82,16 +82,17 @@ const httpsServer = https.createServer(creds, (req, res) => {
   });
 });
 
+const httpPORT = 5001;
+
+const httpsPORT = 8001
+
 const httpServer = http.createServer(creds, (req, res) => {
   const myurl = url.parse(req.url);               // important
-  res.writeHead(301, { location: `https://markeybass.com:3001${myurl.pathname}`})
+  res.writeHead(301, { location: `https://markeybass.com:${httpServer}${myurl.pathname}`})
   res.end();
 });
 
 
-const httpPORT = 5001;
-
-const httpsPORT = 8001
 
 httpServer.listen(httpPORT, () => console.log(`Server running on port ${httpPORT}`));
 httpsServer.listen(httpsPORT, () => console.log(`Server running on port ${httpsPORT}`));

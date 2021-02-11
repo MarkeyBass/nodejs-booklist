@@ -1,9 +1,24 @@
 
 const http = require("http");
+const https = require("https");
 const path = require("path");
 const fs = require("fs");
+const url = require('url');
 
-const server = http.createServer((req, res) => {
+// REDIRECTION TO HTTPS
+
+const cert = fs.readFileSync('/etc/letsencrypt/archive/markeybass.com/cert1.pem', 'utf8');
+const ca = fs.readFileSync('/etc/letsencrypt/archive/markeybass.com/chain1.pem');
+const fullchain = fs.readFileSync('/etc/letsencrypt/archive/markeybass.com/fullchain1.pem');
+const key = fs.readFileSync('/etc/letsencrypt/archive/markeybass.com/privkey1.pem');
+
+const creds = {
+  key,
+  cret,
+  ca
+} 
+
+const httpsServer = https.createServer(creds, (req, res) => {
   // Build file path
   let filePath = path.join(
     __dirname,
@@ -67,29 +82,18 @@ const server = http.createServer((req, res) => {
   });
 });
 
-const PORT = process.env.PORT || 5001;
+const httpServer = http.createServer(creds, (req, res) => {
+  const myurl = url.parse(req.url);               // important
+  res.writeHead(301, { location: `https://markeybass.com:3001${myurl.pathname}`})
+  res.end();
+});
 
-server.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+const httpPORT = 5001;
+
+const httpsPORT = 8001
+
+httpServer.listen(httpPORT, () => console.log(`Server running on port ${httpPORT}`));
+httpsServer.listen(httpsPORT, () => console.log(`Server running on port ${httpsPORT}`));
 
 
-// const server = http.createServer((req, res) => {
-  // if (req.url === '/') {
-  //   fs.readFile(
-  //     path.join(__dirname, 'public', 'index.html'),
-  //     (err, content) => {
-  //       if (err) throw err;
-  //       res.writeHead(200, { 'Content-Type': 'text/html' });
-  //       res.end(content);
-  //     }
-  //   );
-  // }
-
-  // if (req.url === '/api/users') {
-  //   const users = [
-  //     { name: 'Bob Smith', age: 40 },
-  //     { name: 'John Doe', age: 30 }
-  //   ];
-  //   res.writeHead(200, { 'Content-Type': 'application/json' });
-  //   res.end(JSON.stringify(users));
-  // }
-// }
